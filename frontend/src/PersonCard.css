@@ -1,0 +1,62 @@
+.person-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+  width: 90vw;
+  max-width: 400px;
+  height: 70vh;
+  max-height: 600px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-image {
+  flex: 1;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 20px;
+}
+
+.card-image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%);
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+}
+
+.card-image-overlay h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.card-content {
+  padding: 20px;
+  background: #f8f9fa;
+  text-align: center;
+}
+
+.card-content p {
+  margin: 0 0 15px 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+.card-content a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.card-content a:hover {
+  text-decoration: underline;
+}

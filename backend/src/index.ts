@@ -9,20 +9,35 @@ app.get('/api/health', (req, res) => {
 });
 
 app.get('/api/deaths', async (req, res) => {
-  const deaths = await WikipediaService.getRecentDeaths();
-  res.json(deaths);
+  try {
+    const deaths = await WikipediaService.getDeaths();
+    res.json(deaths);
+  } catch (error) {
+    console.error('Error fetching deaths from database:', error);
+    res.status(500).send('Error fetching data');
+  }
 });
 
-// Periodically fetch data in the background
-const WIKIPEDIA_FETCH_INTERVAL = 5 * 60 * 1000; // 5 minutes
-setInterval(() => {
-  console.log('Periodic fetch of Wikipedia data...');
-  WikipediaService.getRecentDeaths();
-}, WIKIPEDIA_FETCH_INTERVAL);
+// --- Background Data Fetching ---
 
+const WIKIPEDIA_FETCH_INTERVAL = 5 * 60 * 1000; // 5 minutes
+
+// Function to perform the Wikipedia data update
+const performUpdate = () => {
+  console.log('Triggering periodic Wikipedia data update...');
+  WikipediaService.updateRecentDeaths().catch(error => {
+    console.error('Error during periodic Wikipedia data update:', error);
+  });
+};
+
+// Set up the interval
+setInterval(performUpdate, WIKIPEDIA_FETCH_INTERVAL);
+
+// --- Server Startup ---
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
-  // Initial fetch on startup
-  WikipediaService.getRecentDeaths();
+  // Initial data fetch on startup
+  console.log('Performing initial data fetch on startup...');
+  performUpdate();
 });
